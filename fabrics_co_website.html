@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="nl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabrics & Co | Exclusieve Gordijnstoffen Groothandel</title>
+    
+    <!-- Tailwind CSS voor modern & responsive design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#111111',
+                            light: '#FAF9F6',
+                            gold: '#C5A880',
+                            goldDark: '#A88B62',
+                            gray: '#707072',
+                            sand: '#E6DFD5'
+                        }
+                    },
+                    fontFamily: {
+                        playfair: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Iconen -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- GSAP (GreenSock) voor hoogwaardige animaties -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* Custom scrollbar voor een premium gevoel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF9F6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C5A880;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #A88B62;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Subtiele animatie-hulpmiddelen */
+        .gold-glow:hover {
+            box-shadow: 0 0 20px rgba(197, 168, 128, 0.3);
+        }
+
+        /* Custom glassmorphism */
+        .glass-nav {
+            background: rgba(250, 249, 246, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-brand-light text-brand-dark font-sans overflow-x-hidden">
+
+    <!-- HEADER / NAVIGATION -->
+    <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-6 px-6 lg:px-16 glass-nav border-b border-black/5">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            
+            <!-- Logo gebaseerd op het aangeleverde bestand -->
+            <a href="#home" class="flex items-center space-x-3 group focus:outline-none">
+                <div class="border border-brand-dark/20 p-2 text-center transition-all duration-300 group-hover:border-brand-gold">
+                    <span class="block text-[8px] tracking-[0.3em] uppercase text-brand-gray">Est. 2025</span>
+                    <span class="block font-playfair font-bold text-lg lg:text-xl tracking-wider uppercase text-brand-dark">FABRICS & CO</span>
+                    <span class="block text-[8px] tracking-[0.4em] uppercase text-brand-gold font-semibold">1612</span>
+                </div>
+            </a>
+
+            <!-- Nav Links -->
+            <div class="hidden md:flex items-center space-x-10">
+                <a href="#home" class="text-sm font-semibold tracking-widest uppercase hover:text-brand-gold transition-colors duration-300">Home</a>
+                <a href="#simulator" class="text-sm font-semibold tracking-widest uppercase hover:text-brand-gold transition-colors duration-300">Studio</a>
+                <a href="#collectie" class="text-sm font-semibold tracking-widest uppercase hover:text-brand-gold transition-colors duration-300">Collectie</a>
+                <a href="#over" class="text-sm font-semibold tracking-widest uppercase hover:text-brand-gold transition-colors duration-300">Over Ons</a>
+                <a href="#contact" class="text-sm font-semibold tracking-widest uppercase hover:text-brand-gold transition-colors duration-300">B2B Portal</a>
+            </div>
+
+            <!-- CTA / Contact Trigger -->
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleCart()" class="relative p-2 text-brand-dark hover:text-brand-gold transition-colors duration-300 focus:outline-none">
+                    <i class="fa-solid fa-swatchbook text-xl"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-brand-gold text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold scale-100 transition-transform duration-300">0</span>
+                </button>
+                <a href="#contact" class="hidden sm:inline-block border border-brand-dark px-6 py-2.5 text-xs font-semibold tracking-widest uppercase hover:bg-brand-dark hover:text-white transition-all duration-300">
+                    Stalen Aanvragen
+                </a>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-brand-dark text-xl p-2 focus:outline-none">
+                    <i id="menu-icon" class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-brand-light z-40 flex flex-col justify-center items-center space-y-8 transform translate-x-full transition-transform duration-500 md:hidden">
+        <a href="#home" onclick="toggleMobileMenu()" class="font-playfair text-3xl hover:text-brand-gold">Home</a>
+        <a href="#simulator" onclick="toggleMobileMenu()" class="font-playfair text-3xl hover:text-brand-gold">Studio</a>
+        <a href="#collectie" onclick="toggleMobileMenu()" class="font-playfair text-3xl hover:text-brand-gold">Collectie</a>
+        <a href="#over" onclick="toggleMobileMenu()" class="font-playfair text-3xl hover:text-brand-gold">Over Ons</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="font-playfair text-3xl hover:text-brand-gold">B2B Portal</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="border border-brand-dark px-8 py-3 text-sm font-semibold tracking-widest uppercase hover:bg-brand-dark hover:text-white transition-all">
+            Stalen Aanvragen
+        </a>
+    </div>
+
+    <!-- HERO SECTION met HTML5 Curtain Animation -->
+    <section id="home" class="min-h-screen pt-28 lg:pt-0 flex flex-col justify-center relative overflow-hidden bg-gradient-to-br from-brand-light via-brand-sand/30 to-brand-light">
+        <div class="max-w-7xl mx-auto px-6 lg:px-16 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+            
+            <!-- Left Hero Text Content -->
+            <div class="lg:col-span-6 space-y-8 text-left z-20">
+                <div class="inline-flex items-center space-x-2 border border-brand-gold/40 px-3 py-1 rounded-full bg-white/50 backdrop-blur-sm">
+                    <span class="w-2 h-2 rounded-full bg-brand-gold animate-ping"></span>
+                    <span class="text-[10px] uppercase tracking-widest font-bold text-brand-gold">Nieuwe Collectie 2025/2026</span>
+                </div>
+                
+                <h1 class="font-playfair text-5xl lg:text-7xl font-bold tracking-tight text-brand-dark leading-[1.1]" id="hero-title">
+                    Gordijnstoffen <br>
+                    <span class="text-brand-gold italic font-normal">in Beweging</span>
+                </h1>
+                
+                <p class="text-brand-gray text-base lg:text-lg max-w-md leading-relaxed" id="hero-subtitle">
+                    Exclusieve weefpatronen, luxe texturen en ongeëvenaarde kwaliteit voor interieurarchitecten en projectontwikkelaars. Ontdek de valling van onze stoffen in onze interactieve studio.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 pt-4 animate-fade-in" id="hero-ctas">
+                    <a href="#simulator" class="bg-brand-dark text-white px-8 py-4 text-xs font-semibold tracking-widest uppercase hover:bg-brand-gold hover:text-brand-dark transition-all duration-300 shadow-lg shadow-black/10 text-center">
+                        Ontdek De Studio
+                    </a>
+                    <a href="#collectie" class="border border-brand-dark text-brand-dark px-8 py-4 text-xs font-semibold tracking-widest uppercase hover:bg-brand-dark hover:text-white transition-all duration-300 text-center">
+                        Bekijk de Collectie
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Hero Visual Drape Display -->
+            <div class="lg:col-span-6 relative flex justify-center items-center h-[50vh] lg:h-[70vh]">
+                <div class="absolute -inset-4 bg-brand-gold/10 rounded-full blur-3xl opacity-60"></div>
+                <!-- Prachtige artistieke draperie weergave (SVG of gestileerd canvas) -->
+                <div class="relative w-full h-full max-w-md flex justify-between items-start gap-1">
+                    <div class="w-full h-full bg-gradient-to-b from-brand-gold/80 to-brand-sand/20 rounded-b-full transform -translate-y-6 animate-[bounce_6s_infinite_ease-in-out]"></div>
+                    <div class="w-full h-[90%] bg-gradient-to-b from-brand-dark to-brand-gray/20 rounded-b-full transform translate-y-2 animate-[bounce_8s_infinite_ease-in-out_1s]"></div>
+                    <div class="w-full h-[95%] bg-gradient-to-b from-brand-goldDark/70 to-brand-light rounded-b-full transform -translate-y-2 animate-[bounce_7s_infinite_ease-in-out_2s]"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE STUDIO (SIMULATOR) -->
+    <section id="simulator" class="py-24 bg-white border-y border-brand-dark/5">
+        <div class="max-w-7xl mx-auto px-6 lg:px-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                
+                <!-- Simulator controls en info -->
+                <div class="lg:col-span-5 space-y-8">
+                    <span class="text-xs uppercase tracking-[0.3em] font-bold text-brand-gold">01 / Interactieve Studio</span>
+                    <h2 class="font-playfair text-4xl lg:text-5xl font-bold text-brand-dark leading-tight">
+                        Simuleer Uw <br><span class="italic font-normal text-brand-gold">Exclusieve Valling</span>
+                    </h2>
+                    <p class="text-brand-gray leading-relaxed text-sm lg:text-base">
+                        Pas de instellingen hieronder aan om de soepelheid, plooival en glans van verschillende wevingen digitaal te ervaren op onze 3D-geanimeerde curtain wave simulator.
+                    </p>
+
+                    <!-- Control Panel -->
+                    <div class="bg-brand-light p-6 rounded-2xl border border-brand-dark/5 space-y-6">
+                        <!-- Stof weefsel selector -->
+                        <div class="space-y-2">
+                            <label class="text-xs uppercase tracking-widest font-bold text-brand-dark">Stof Selectie</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button onclick="setFabric('linnen')" id="btn-linnen" class="py-2.5 text-xs font-semibold tracking-wider rounded border border-brand-gold bg-brand-gold text-white transition-all duration-300">
+                                    Linnen
+                                </button>
+                                <button onclick="setFabric('velvet')" id="btn-velvet" class="py-2.5 text-xs font-semibold tracking-wider rounded border border-brand-dark/10 hover:border-brand-gold transition-all duration-300">
+                                    Velvet
+                                </button>
+                                <button onclick="setFabric('silk')" id="btn-silk" class="py-2.5 text-xs font-semibold tracking-wider rounded border border-brand-dark/10 hover:border-brand-gold transition-all duration-300">
+                                    Zijde
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Plooi diepte slider -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs font-bold uppercase tracking-wider text-brand-dark">
+                                <span>Plooidiepte</span>
+                                <span id="pleat-val">medium</span>
+                            </div>
+                            <input id="pleat-slider" type="range" min="10" max="60" value="30" oninput="updateSimulator()" class="w-full accent-brand-gold">
+                        </div>
+
+                        <!-- Wind / Beweging slider -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs font-bold uppercase tracking-wider text-brand-dark">
+                                <span>Bries (Wind)</span>
+                                <span id="wind-val">licht</span>
+                            </div>
+                            <input id="wind-slider" type="range" min="0" max="100" value="30" oninput="updateSimulator()" class="w-full accent-brand-gold">
+                        </div>
+
+                        <!-- Kleurkiezer -->
+                        <div class="space-y-2">
+                            <label class="text-xs uppercase tracking-widest font-bold text-brand-dark">Kleurtonen</label>
+                            <div class="flex gap-3">
+                                <button onclick="setFabricColor('#C5A880')" class="w-8 h-8 rounded-full border-2 border-white ring-2 ring-brand-gold bg-[#C5A880] focus:outline-none transition-all"></button>
+                                <button onclick="setFabricColor('#E6DFD5')" class="w-8 h-8 rounded-full border-2 border-white ring-1 ring-black/10 bg-[#E6DFD5] focus:outline-none transition-all"></button>
+                                <button onclick="setFabricColor('#4F4335')" class="w-8 h-8 rounded-full border-2 border-white ring-1 ring-black/10 bg-[#4F4335] focus:outline-none transition-all"></button>
+                                <button onclick="setFabricColor('#2A2E2B')" class="w-8 h-8 rounded-full border-2 border-white ring-1 ring-black/10 bg-[#2A2E2B] focus:outline-none transition-all"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive canvas simulator display -->
+                <div class="lg:col-span-7 flex flex-col justify-center items-center">
+                    <div class="relative w-full aspect-[4/3] rounded-3xl overflow-hidden bg-brand-light shadow-2xl border border-brand-dark/10 p-4">
+                        <canvas id="studioCanvas" class="w-full h-full rounded-2xl"></canvas>
+                        
+                        <div class="absolute bottom-6 left-6 bg-brand-dark text-white text-[10px] uppercase tracking-widest px-4 py-2 rounded-full font-semibold backdrop-blur">
+                            <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Interactieve Preview
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ARCHITECTURAL FABRIC COLLECTION -->
+    <section id="collectie" class="py-24 bg-brand-light">
+        <div class="max-w-7xl mx-auto px-6 lg:px-16">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
+                <div class="space-y-4">
+                    <span class="text-xs uppercase tracking-[0.3em] font-bold text-brand-gold">02 / De Weverij</span>
+                    <h2 class="font-playfair text-4xl lg:text-5xl font-bold text-brand-dark leading-tight">
+                        Onze Signatuur <span class="italic font-normal text-brand-gold">Stoffen</span>
+                    </h2>
+                </div>
+                <!-- Weaving Filters -->
+                <div class="flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-widest">
+                    <button onclick="filterCollection('all')" class="px-5 py-2.5 rounded bg-brand-dark text-white border border-brand-dark transition-all">Alles</button>
+                    <button onclick="filterCollection('linnen')" class="px-5 py-2.5 rounded hover:bg-brand-dark hover:text-white border border-brand-dark/10 transition-all">Linnen</button>
+                    <button onclick="filterCollection('velvet')" class="px-5 py-2.5 rounded hover:bg-brand-dark hover:text-white border border-brand-dark/10 transition-all">Velvet</button>
+                    <button onclick="filterCollection('silk')" class="px-5 py-2.5 rounded hover:bg-brand-dark hover:text-white border border-brand-dark/10 transition-all">Zijde</button>
+                </div>
+            </div>
+
+            <!-- Grid Items -->
+            <div id="collection-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                
+                <!-- Swatch 1 -->
+                <div class="group fabric-card" data-category="linnen">
+                    <div class="aspect-[3/4] rounded-2xl overflow-hidden relative shadow-md bg-brand-sand/30 border border-brand-dark/5 transition-all duration-500 group-hover:-translate-y-2">
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-brand-dark/30 opacity-60"></div>
+                        
+                        <!-- Luxe Abstracte Weefsel Structuur Weergave -->
+                        <div class="absolute inset-0 flex items-center justify-center p-8">
+                            <div class="w-full h-full bg-[#E6DFD5] rounded-xl relative overflow-hidden shadow-inner flex flex-col justify-end p-6">
+                                <div class="absolute inset-0 opacity-25" style="background-image: radial-gradient(circle, #000 1px, transparent 1px); background-size: 8px 8px;"></div>
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-brand-gray">100% Organisch</span>
+                                <h3 class="font-playfair text-2xl font-bold text-brand-dark mt-1">Chambray Linnen</h3>
+                            </div>
+                        </div>
+
+                        <!-- Hover Overlay -->
+                        <div class="absolute inset-0 bg-brand-dark/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-8">
+                            <span class="text-xs uppercase tracking-widest text-brand-gold font-bold">Inclusief Brandvertragend Certificaat</span>
+                            <div class="space-y-4">
+                                <p class="text-brand-light text-sm">Een grove, ademende weving met een prachtig natuurlijke valling. Perfect voor modern minimalistische interieurs.</p>
+                                <button onclick="addToCart('Chambray Linnen', '#E6DFD5')" class="w-full py-3 bg-brand-gold hover:bg-brand-goldDark text-white font-bold text-xs uppercase tracking-widest transition-colors duration-300">
+                                    Voeg gratis staal toe
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Swatch 2 -->
+                <div class="group fabric-card" data-category="velvet">
+                    <div class="aspect-[3/4] rounded-2xl overflow-hidden relative shadow-md bg-brand-sand/30 border border-brand-dark/5 transition-all duration-500 group-hover:-translate-y-2">
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-brand-dark/30 opacity-60"></div>
+                        
+                        <div class="absolute inset-0 flex items-center justify-center p-8">
+                            <div class="w-full h-full bg-[#C5A880] rounded-xl relative overflow-hidden shadow-inner flex flex-col justify-end p-6">
+                                <div class="absolute inset-0 opacity-10" style="background: repeating-linear-gradient(45deg, #000, #000 10px, #fff 10px, #fff 20px);"></div>
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-white/80">Premium Fluweel</span>
+                                <h3 class="font-playfair text-2xl font-bold text-white mt-1">Imperial Velvet</h3>
+                            </div>
+                        </div>
+
+                        <div class="absolute inset-0 bg-brand-dark/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-8">
+                            <span class="text-xs uppercase tracking-widest text-brand-gold font-bold">Geluiddempend (Acoustic)</span>
+                            <div class="space-y-4">
+                                <p class="text-brand-light text-sm">Zware, weelderige gordijnstof met een luxe glans en hoge akoestische dempingswaarde.</p>
+                                <button onclick="addToCart('Imperial Velvet', '#C5A880')" class="w-full py-3 bg-brand-gold hover:bg-brand-goldDark text-white font-bold text-xs uppercase tracking-widest transition-colors duration-300">
+                                    Voeg gratis staal toe
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Swatch 3 -->
+                <div class="group fabric-card" data-category="silk">
+                    <div class="aspect-[3/4] rounded-2xl overflow-hidden relative shadow-md bg-brand-sand/30 border border-brand-dark/5 transition-all duration-500 group-hover:-translate-y-2">
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-brand-dark/30 opacity-60"></div>
+                        
+                        <div class="absolute inset-0 flex items-center justify-center p-8">
+                            <div class="w-full h-full bg-[#FAF9F6] rounded-xl relative overflow-hidden shadow-inner flex flex-col justify-end p-6 border border-brand-dark/5">
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-brand-gold">Haspelzijde Mix</span>
+                                <h3 class="font-playfair text-2xl font-bold text-brand-dark mt-1">Lustre Silk</h3>
+                            </div>
+                        </div>
+
+                        <div class="absolute inset-0 bg-brand-dark/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-8">
+                            <span class="text-xs uppercase tracking-widest text-brand-gold font-bold">Licht Filterend</span>
+                            <div class="space-y-4">
+                                <p class="text-brand-light text-sm">Ultra-fijne zijden weving die het daglicht op een magische wijze filtert en een unieke glinstering in de ruimte werpt.</p>
+                                <button onclick="addToCart('Lustre Silk', '#FAF9F6')" class="w-full py-3 bg-brand-gold hover:bg-brand-goldDark text-white font-bold text-xs uppercase tracking-widest transition-colors duration-300">
+                                    Voeg gratis staal toe
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- HERITAGE / OVER ONS -->
+    <section id="over" class="py-24 bg-white relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-brand-sand/20 -skew-x-12 transform origin-top-right"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-16 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                
+                <!-- Heritage Text -->
+                <div class="space-y-8">
+                    <span class="text-xs uppercase tracking-[0.3em] font-bold text-brand-gold">03 / Ons Erfgoed</span>
+                    <h2 class="font-playfair text-4xl lg:text-5xl font-bold text-brand-dark leading-tight">
+                        Weverij Traditie <br><span class="italic font-normal text-brand-gold">Sinds 1612</span>
+                    </h2>
+                    <p class="text-brand-gray leading-relaxed text-sm lg:text-base">
+                        Onze weefhuizen combineren historische weefgetouwpatronen met moderne garentechnologie. Fabrics & Co levert exclusief aan interieurarchitecten, ontwerpers en hoogwaardige gordijnspeciaalzaken wereldwijd. Elk garen is geselecteerd op basis van soepelheid, duurzaamheid en kleurvastheid.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6 pt-4">
+                        <div class="border-l-2 border-brand-gold pl-4">
+                            <span class="block font-playfair text-3xl font-bold text-brand-dark">100%</span>
+                            <span class="text-[10px] uppercase tracking-wider text-brand-gray font-semibold">Brandvertragend gecertificeerd</span>
+                        </div>
+                        <div class="border-l-2 border-brand-gold pl-4">
+                            <span class="block font-playfair text-3xl font-bold text-brand-dark">Oeko-Tex</span>
+                            <span class="text-[10px] uppercase tracking-wider text-brand-gray font-semibold">Ecologisch Verantwoord</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Artistieke Visualisatie van het Weefproces -->
+                <div class="relative p-12 bg-brand-light rounded-3xl border border-brand-dark/5 flex flex-col space-y-6">
+                    <div class="flex items-center justify-between border-b border-brand-dark/10 pb-4">
+                        <span class="font-playfair text-lg italic font-bold">Kwaliteitsspecificaties</span>
+                        <i class="fa-solid fa-shield text-brand-gold text-xl"></i>
+                    </div>
+                    <ul class="space-y-4 text-xs font-semibold uppercase tracking-wider text-brand-dark">
+                        <li class="flex justify-between">
+                            <span>Martindale Slijtageweerstand</span>
+                            <span class="text-brand-gold">50.000+ Toeren</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Krimp Tolerantie</span>
+                            <span class="text-brand-gold">&lt; 0.5% (Sanforized)</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Lichtechtheid (Kleurbehoud)</span>
+                            <span class="text-brand-gold">Klasse 7 (Excellente resistentie)</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- B2B PORTAL & SAMPLE REQUEST -->
+    <section id="contact" class="py-24 bg-brand-light">
+        <div class="max-w-7xl mx-auto px-6 lg:px-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                
+                <!-- B2B Informatie -->
+                <div class="lg:col-span-5 space-y-8">
+                    <span class="text-xs uppercase tracking-[0.3em] font-bold text-brand-gold">04 / B2B Aanvraag</span>
+                    <h2 class="font-playfair text-4xl lg:text-5xl font-bold text-brand-dark leading-tight">
+                        Vraag Uw <br><span class="italic font-normal text-brand-gold">Stalenpakket Aan</span>
+                    </h2>
+                    <p class="text-brand-gray leading-relaxed text-sm lg:text-base">
+                        Laat uw gegevens achter via de B2B portal. Als geregistreerde interieurprofessional ontvangt u direct onze fysieke stalencollectie met technische specificatiedocumenten.
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 p-4 bg-white rounded-xl border border-brand-dark/5">
+                            <div class="w-10 h-10 bg-brand-gold/10 text-brand-gold rounded-full flex items-center justify-center"><i class="fa-solid fa-phone"></i></div>
+                            <div>
+                                <p class="text-[10px] text-brand-gray font-bold uppercase tracking-wider">Direct Contact</p>
+                                <p class="text-xs font-bold">+31 (0)85 012 3456</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 bg-white rounded-xl border border-brand-dark/5">
+                            <div class="w-10 h-10 bg-brand-gold/10 text-brand-gold rounded-full flex items-center justify-center"><i class="fa-solid fa-building-user"></i></div>
+                            <div>
+                                <p class="text-[10px] text-brand-gray font-bold uppercase tracking-wider">B2B Registratie</p>
+                                <p class="text-xs font-bold">b2b@fabricsandco.nl</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- B2B Aanvraagformulier -->
+                <div class="lg:col-span-7 bg-white p-8 lg:p-12 rounded-3xl shadow-2xl border border-brand-dark/5">
+                    <form class="space-y-6" onsubmit="submitSampleRequest(event)">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold uppercase tracking-wider text-brand-dark">Bedrijfsnaam</label>
+                                <input type="text" required placeholder="b.v. Studio Interieur" class="w-full px-4 py-3 bg-brand-light border border-brand-dark/10 rounded focus:ring-1 focus:ring-brand-gold outline-none transition-all text-sm">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold uppercase tracking-wider text-brand-dark">KVK Nummer</label>
+                                <input type="text" required placeholder="12345678" class="w-full px-4 py-3 bg-brand-light border border-brand-dark/10 rounded focus:ring-1 focus:ring-brand-gold outline-none transition-all text-sm">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold uppercase tracking-wider text-brand-dark">Contactpersoon</label>
+                            <input type="text" required placeholder="Uw naam" class="w-full px-4 py-3 bg-brand-light border border-brand-dark/10 rounded focus:ring-1 focus:ring-brand-gold outline-none transition-all text-sm">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold uppercase tracking-wider text-brand-dark">E-mailadres</label>
+                            <input type="email" required placeholder="zakelijk@domein.nl" class="w-full px-4 py-3 bg-brand-light border border-brand-dark/10 rounded focus:ring-1 focus:ring-brand-gold outline-none transition-all text-sm">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold uppercase tracking-wider text-brand-dark">Projectomschrijving (Optioneel)</label>
+                            <textarea rows="3" placeholder="Vertel ons kort meer over uw lopende interieurprojecten..." class="w-full px-4 py-3 bg-brand-light border border-brand-dark/10 rounded focus:ring-1 focus:ring-brand-gold outline-none transition-all text-sm"></textarea>
+                        </div>
+                        
+                        <!-- Dynamische stalen lijst weergave in het formulier -->
+                        <div class="p-4 bg-brand-sand/20 rounded-xl border border-brand-gold/20">
+                            <p class="text-xs font-bold uppercase tracking-wider text-brand-gold mb-2">Geselecteerde Stalen in Mandje</p>
+                            <div id="form-selected-swatches" class="flex flex-wrap gap-2 text-xs font-semibold">
+                                <span class="text-brand-gray italic text-[11px]">Nog geen stalen geselecteerd. Gebruik de knoppen in de collectie sectie.</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 bg-brand-dark text-white rounded font-bold text-xs uppercase tracking-widest hover:bg-brand-gold hover:text-brand-dark transition-all duration-300 shadow-xl shadow-black/10">
+                            Plaats B2B Aanvraag
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-brand-dark text-brand-light pt-20 pb-10 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 lg:px-16 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="space-y-6">
+                <div class="border border-brand-light/20 p-2 text-center w-40">
+                    <span class="block text-[8px] tracking-[0.3em] uppercase text-brand-gray">Est. 2025</span>
+                    <span class="block font-playfair font-bold text-base tracking-wider uppercase text-brand-light">FABRICS & CO</span>
+                    <span class="block text-[8px] tracking-[0.4em] uppercase text-brand-gold font-semibold">1612</span>
+                </div>
+                <p class="text-brand-gray text-xs leading-relaxed">
+                    Exclusieve weverij en B2B groothandelleverancier van premium gordijnstoffen voor interieurprofessionals.
+                </p>
+            </div>
+            
+            <div class="space-y-4">
+                <h4 class="font-bold text-sm tracking-widest uppercase text-brand-gold">Studio</h4>
+                <ul class="space-y-2 text-xs text-brand-gray">
+                    <li><a href="#simulator" class="hover:text-white transition-all">Curtain Wave Simulator</a></li>
+                    <li><a href="#collectie" class="hover:text-white transition-all">Signatuur Wevingen</a></li>
+                    <li><a href="#over" class="hover:text-white transition-all">Erfgoed & Weefwijze</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="font-bold text-sm tracking-widest uppercase text-brand-gold">Contact</h4>
+                <ul class="space-y-2 text-xs text-brand-gray">
+                    <li>T: +31 (0)85 012 3456</li>
+                    <li>E: b2b@fabricsandco.nl</li>
+                    <li>Kantooradres op afspraak</li>
+                </ul>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="font-bold text-sm tracking-widest uppercase text-brand-gold">Certificaten</h4>
+                <div class="flex gap-2">
+                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded text-[9px] uppercase tracking-wider font-bold">Oeko-Tex</span>
+                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded text-[9px] uppercase tracking-wider font-bold">FR Resistant</span>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-16 mt-20 pt-8 border-t border-white/5 text-center text-[10px] tracking-widest uppercase text-brand-gray">
+            &copy; 2026 Fabrics & Co. Alle rechten voorbehouden. Luxe interieurstoffen sinds 1612.
+        </div>
+    </footer>
+
+    <!-- STALEN LAAD-OVER (CART DRAWER) -->
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 w-full max-w-md bg-brand-light border-l border-brand-dark/10 z-[60] transform translate-x-full transition-transform duration-500 shadow-2xl flex flex-col">
+        <div class="p-6 border-b border-brand-dark/10 flex justify-between items-center bg-white">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-swatchbook text-brand-gold"></i>
+                <h3 class="font-playfair text-xl font-bold">Uw Stalenpakket</h3>
+            </div>
+            <button onclick="toggleCart()" class="text-brand-dark p-2 hover:text-brand-gold transition-colors focus:outline-none">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Scrollable items -->
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <!-- Dynamisch geladen stalen -->
+            <p id="empty-cart-msg" class="text-sm text-brand-gray italic text-center py-12">Uw stalenmandje is momenteel leeg. Voeg stoffen toe uit onze collectie.</p>
+        </div>
+
+        <div class="p-6 border-t border-brand-dark/10 bg-white space-y-4">
+            <div class="flex justify-between text-xs font-bold uppercase tracking-wider">
+                <span>Totaal geselecteerd</span>
+                <span id="cart-totals">0 stalen (Max. 5)</span>
+            </div>
+            <a href="#contact" onclick="toggleCart()" class="block w-full py-4 bg-brand-dark text-white text-center font-bold text-xs uppercase tracking-widest hover:bg-brand-gold hover:text-brand-dark transition-colors duration-300">
+                Aanvraag Afronden
+            </a>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION POPUP -->
+    <div id="notification" class="fixed bottom-6 right-6 bg-brand-dark text-white border border-brand-gold/40 px-6 py-4 rounded-xl shadow-2xl z-[70] transform translate-y-24 opacity-0 transition-all duration-300 max-w-sm flex items-center gap-3">
+        <div class="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></div>
+        <span id="notification-text" class="text-xs font-bold uppercase tracking-wider">Staal succesvol toegevoegd</span>
+    </div>
+
+    <!-- CUSTOM INTERACTIVE CANVAS WAVE ANIMATOR SCRIPT -->
+    <script>
+        // State management voor stalenmandje
+        let cart = [];
+
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.toggle('translate-x-full');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            if (menu.classList.contains('translate-x-full')) {
+                menu.classList.remove('translate-x-full');
+                icon.className = "fa-solid fa-xmark";
+            } else {
+                menu.classList.add('translate-x-full');
+                icon.className = "fa-solid fa-bars";
+            }
+        }
+
+        function filterCollection(category) {
+            const cards = document.querySelectorAll('.fabric-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function addToCart(name, colorCode) {
+            if (cart.length >= 5) {
+                showNotification("Maximaal 5 stalen per aanvraag.");
+                return;
+            }
+            if (cart.find(item => item.name === name)) {
+                showNotification("Dit staal zit al in uw mandje.");
+                return;
+            }
+            
+            cart.push({ name, colorCode });
+            updateCartUI();
+            showNotification(`Staal ${name} toegevoegd!`);
+        }
+
+        function removeFromCart(name) {
+            cart = cart.filter(item => item.name !== name);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items');
+            const countBadge = document.getElementById('cart-count');
+            const totalsText = document.getElementById('cart-totals');
+            const formSelected = document.getElementById('form-selected-swatches');
+            
+            // Badge & totals update
+            countBadge.innerText = cart.length;
+            totalsText.innerText = `${cart.length} stalen (Max. 5)`;
+
+            // Cart lade update
+            if (cart.length === 0) {
+                container.innerHTML = `<p id="empty-cart-msg" class="text-sm text-brand-gray italic text-center py-12">Uw stalenmandje is momenteel leeg. Voeg stoffen toe uit onze collectie.</p>`;
+                formSelected.innerHTML = `<span class="text-brand-gray italic text-[11px]">Nog geen stalen geselecteerd. Gebruik de knoppen in de collectie sectie.</span>`;
+            } else {
+                container.innerHTML = '';
+                formSelected.innerHTML = '';
+                
+                cart.forEach(item => {
+                    // Lade item
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = "flex items-center justify-between p-3 bg-white border border-brand-dark/5 rounded-xl";
+                    itemDiv.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full border border-brand-dark/10" style="background-color: ${item.colorCode}"></div>
+                            <span class="text-xs font-bold tracking-wider uppercase text-brand-dark">${item.name}</span>
+                        </div>
+                        <button onclick="removeFromCart('${item.name}')" class="text-brand-gray hover:text-red-500 p-2 text-sm transition-colors focus:outline-none">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    `;
+                    container.appendChild(itemDiv);
+
+                    // Formulier weergave item
+                    const formSpan = document.createElement('span');
+                    formSpan.className = "px-3 py-1.5 bg-brand-dark text-white rounded border border-brand-gold flex items-center gap-2";
+                    formSpan.innerHTML = `
+                        <span class="w-2.5 h-2.5 rounded-full inline-block border border-white" style="background-color: ${item.colorCode}"></span>
+                        <span>${item.name}</span>
+                    `;
+                    formSelected.appendChild(formSpan);
+                });
+            }
+        }
+
+        function showNotification(text) {
+            const popup = document.getElementById('notification');
+            const textSpan = document.getElementById('notification-text');
+            textSpan.innerText = text;
+            
+            popup.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                popup.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+        function submitSampleRequest(event) {
+            event.preventDefault();
+            if (cart.length === 0) {
+                showNotification("Selecteer eerst ten minste 1 staal.");
+                return;
+            }
+            showNotification("Aanvraag succesvol verstuurd!");
+            cart = [];
+            updateCartUI();
+            event.target.reset();
+        }
+
+        // ==========================================
+        // CANVAS WAVES CURTAIN SIMULATOR CODE (STUDIO)
+        // ==========================================
+        const canvas = document.getElementById('studioCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let simFabric = 'linnen';
+        let simColor = '#C5A880';
+        let simWind = 30;
+        let simPleat = 30;
+        let animationFrameId;
+
+        // Resize handler om de canvas scherp te houden
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function setFabric(type) {
+            simFabric = type;
+            // Update button styles
+            ['linnen', 'velvet', 'silk'].forEach(t => {
+                const btn = document.getElementById(`btn-${t}`);
+                if (t === type) {
+                    btn.className = "py-2.5 text-xs font-semibold tracking-wider rounded border border-brand-gold bg-brand-gold text-white transition-all duration-300";
+                } else {
+                    btn.className = "py-2.5 text-xs font-semibold tracking-wider rounded border border-brand-dark/10 hover:border-brand-gold transition-all duration-300";
+                }
+            });
+            updateSimulator();
+        }
+
+        function setFabricColor(color) {
+            simColor = color;
+            updateSimulator();
+        }
+
+        function updateSimulator() {
+            simPleat = parseFloat(document.getElementById('pleat-slider').value);
+            simWind = parseFloat(document.getElementById('wind-slider').value);
+
+            // Update tekstlabels
+            document.getElementById('pleat-val').innerText = simPleat < 25 ? 'strak' : (simPleat > 45 ? 'diep' : 'medium');
+            document.getElementById('wind-val').innerText = simWind < 15 ? 'geen' : (simWind > 70 ? 'windvlaag' : 'bries');
+        }
+
+        let time = 0;
+        function animateSimulator() {
+            const rect = canvas.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
+            
+            ctx.clearRect(0, 0, width, height);
+
+            // Achtergrond studio sfeer
+            ctx.fillStyle = '#FAF9F6';
+            ctx.fillRect(0, 0, width, height);
+
+            // Getekende schaduw op de muur
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+            ctx.fillRect(width * 0.1, 0, width * 0.8, height);
+
+            time += 0.01 + (simWind / 3000);
+
+            // Bereken het aantal vouwen (pleats)
+            const foldsCount = 14;
+            const startX = width * 0.15;
+            const endX = width * 0.85;
+            const segmentWidth = (endX - startX) / foldsCount;
+
+            // Gordijn draperie tekenen met wiskundige vouw-projectie
+            for (let i = 0; i < foldsCount; i++) {
+                const x1 = startX + i * segmentWidth;
+                const x2 = x1 + segmentWidth;
+                
+                // Bereken golfdiepte en dynamische bries
+                const waveOffset = Math.sin(time + i * 1.2) * (simWind / 6);
+                
+                // Schaduw en highlight factor op basis van wevingtype
+                let shininess = 0.1;
+                if (simFabric === 'velvet') shininess = 0.25;
+                if (simFabric === 'silk') shininess = 0.45;
+
+                // Gradiënt voor de diepte van de vouw (3D pleat shading)
+                const grad = ctx.createLinearGradient(x1, 0, x2, 0);
+                
+                // Kleur omzetting naar RGB voor verlichtingseffect
+                const rgb = hexToRgb(simColor);
+                
+                // Bereken schaduwintensiteit gebaseerd op plooien
+                const darkFactor = 0.4 + (simPleat / 120);
+                const shadowColor = `rgb(${Math.max(0, rgb.r * darkFactor)}, ${Math.max(0, rgb.g * darkFactor)}, ${Math.max(0, rgb.b * darkFactor)})`;
+                const highlightColor = `rgb(${Math.min(255, rgb.r * (1 + shininess))}, ${Math.min(255, rgb.g * (1 + shininess))}, ${Math.min(255, rgb.b * (1 + shininess))})`;
+                const baseColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+
+                if (i % 2 === 0) {
+                    grad.addColorStop(0, shadowColor);
+                    grad.addColorStop(0.5, baseColor);
+                    grad.addColorStop(1, highlightColor);
+                } else {
+                    grad.addColorStop(0, highlightColor);
+                    grad.addColorStop(0.5, baseColor);
+                    grad.addColorStop(1, shadowColor);
+                }
+
+                ctx.fillStyle = grad;
+
+                // Teken het vouw-segment met een lichte curves/golving onderaan voor valling
+                ctx.beginPath();
+                ctx.moveTo(x1, 20); // Top gordijnrail
+                ctx.lineTo(x2, 20);
+                
+                // Golvende onderzijde om de plooi te simuleren
+                const curveY = height - 40;
+                ctx.quadraticCurveTo(
+                    x2 + waveOffset, curveY + (simPleat / 3),
+                    x2 + waveOffset, curveY
+                );
+                ctx.lineTo(x1 + waveOffset, curveY);
+                ctx.quadraticCurveTo(
+                    x1 + waveOffset, curveY + (simPleat / 3),
+                    x1, 20
+                );
+                
+                ctx.fill();
+
+                // Textuur overlay toevoegen op basis van weefseltype
+                if (simFabric === 'linnen') {
+                    ctx.fillStyle = 'rgba(255,255,255,0.04)';
+                    // Subtiel weefsel-raster effect
+                    if (i % 3 === 0) {
+                        ctx.fillRect(x1 + waveOffset, 20, segmentWidth, height - 60);
+                    }
+                }
+            }
+
+            // Gordijnrail bovenaan
+            ctx.fillStyle = '#111111';
+            ctx.fillRect(startX - 10, 10, (endX - startX) + 20, 10);
+
+            animationFrameId = requestAnimationFrame(animateSimulator);
+        }
+
+        // Helper om hexadecimale kleur om te rekenen naar RGB
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : { r: 197, g: 168, b: 128 };
+        }
+
+        // Start de simulatie
+        animateSimulator();
+
+        // GSAP ScrollTrigger introductie-animaties
+        document.addEventListener("DOMContentLoaded", function() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.from("#hero-title", {
+                y: 50,
+                opacity: 0,
+                duration: 1.2,
+                ease: "power3.out"
+            });
+
+            gsap.from("#hero-subtitle", {
+                y: 30,
+                opacity: 0,
+                duration: 1.2,
+                delay: 0.3,
+                ease: "power3.out"
+            });
+
+            gsap.from("#hero-ctas", {
+                y: 30,
+                opacity: 0,
+                duration: 1.2,
+                delay: 0.5,
+                ease: "power3.out"
+            });
+        });
+    </script>
+</body>
+</html>
